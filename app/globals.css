@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { height: 100%; background: #0b0b0d; color: #e7e7ea; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  .neon-pulse { animation: neonPulse 3.2s ease-in-out infinite; }
+}
+@keyframes neonPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.82; }
+}
+
+/* ───────── landing page motion (all disabled for people who prefer reduced motion) ───────── */
+.marquee { display: flex; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee__track { display: flex; flex-shrink: 0; align-items: center; gap: 2.5rem; padding-right: 2.5rem; }
+@keyframes marquee { to { transform: translateX(-100%); } }
+@keyframes sway {
+  0%, 100% { transform: perspective(900px) rotateY(-11deg) rotateX(4deg); }
+  50%      { transform: perspective(900px) rotateY(11deg)  rotateX(-2deg); }
+}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes flicker { 0%, 100% { opacity: 1; } 46% { opacity: 1; } 48% { opacity: .78; } 50% { opacity: 1; } 78% { opacity: .9; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .marquee__track { animation: marquee 38s linear infinite; }
+  .marquee:hover .marquee__track { animation-play-state: paused; }
+  .sway { animation: sway 9s ease-in-out infinite; }
+  .fade-up { animation: fadeUp .8s ease-out both; }
+  .fade-up-2 { animation: fadeUp .8s .12s ease-out both; }
+  .fade-up-3 { animation: fadeUp .8s .24s ease-out both; }
+  .flicker { animation: flicker 6s linear infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee { flex-wrap: wrap; justify-content: center; -webkit-mask-image: none; mask-image: none; }
+  .marquee__track[aria-hidden="true"] { display: none; }
+  .marquee__track { flex-wrap: wrap; justify-content: center; padding: 0 1rem; }
+  .sway { transform: perspective(900px) rotateY(-8deg) rotateX(3deg); }
+}
+
+/* ───────── titles: Special Gothic on the public pages (body text stays Roboto Mono) ───────── */
+.marketing :is(h1, h2, h3) { font-family: 'Special Gothic Variable', system-ui, sans-serif; }
+
+/* ───────── idle float for the image cards, plus the mouse-parallax layers ───────── */
+@keyframes drift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@media (prefers-reduced-motion: no-preference) {
+  .drift   { animation: drift 7s ease-in-out infinite; }
+  .drift-2 { animation: drift 9s ease-in-out -3s infinite; }
+  .drift-3 { animation: drift 8s ease-in-out -5s infinite; }
+}
